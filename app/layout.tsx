@@ -15,11 +15,7 @@ export const metadata: Metadata = {
     'Fullstack and real-time discord clone, all with servers, channels, video calls, audio calls, editing and deleting messages as well as member roles.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
@@ -37,3 +33,5 @@ export default function RootLayout({
     </ClerkProvider>
   );
 }
+
+export default RootLayout;

@@ -13,7 +13,7 @@ interface FileUploadProps {
   onChange: (url?: string) => void;
 }
 
-export const FileUpload = ({ endpoint, value, onChange }: FileUploadProps) => {
+function FileUpload({ endpoint, value, onChange }: FileUploadProps) {
   const fileType = value?.split('.').pop();
 
   if (value && fileType !== 'pdf') {
@@ -42,4 +42,6 @@ export const FileUpload = ({ endpoint, value, onChange }: FileUploadProps) => {
       />
     </div>
   );
-};
+}
+
+export { FileUpload };

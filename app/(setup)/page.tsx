@@ -4,7 +4,7 @@ import { InitialModal } from '@/components/modals/initial-modal';
 import { initialProfile } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 
-export default async function SetupPage() {
+async function SetupPage() {
   const profile = await initialProfile();
 
   const server = await prisma.server.findFirst({
@@ -23,3 +23,5 @@ export default async function SetupPage() {
 
   return <InitialModal />;
 }
+
+export default SetupPage;

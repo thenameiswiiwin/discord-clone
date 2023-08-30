@@ -2,7 +2,7 @@ import { currentUser, redirectToSignIn } from '@clerk/nextjs';
 
 import { prisma } from '@/lib/db';
 
-export const initialProfile = async () => {
+async function initialProfile() {
   const user = await currentUser();
 
   if (!user) {
@@ -29,4 +29,6 @@ export const initialProfile = async () => {
   });
 
   return newProfile;
-};
+}
+
+export { initialProfile };
