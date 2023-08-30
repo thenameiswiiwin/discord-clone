@@ -1,12 +1,14 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +16,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -22,22 +24,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
-import { FileUpload } from "../file-upload";
+import { FileUpload } from '../file-upload';
 
 const formSchema = z.object({
   name: z.string().min(1, {
-    message: "Server name is required.",
+    message: 'Server name is required.',
   }),
   imageUrl: z.string().min(1, {
-    message: "Server image is required.",
+    message: 'Server image is required.',
   }),
 });
 
 function InitialModal() {
   const [isMounted, setIsMounted] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -46,15 +50,23 @@ function InitialModal() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      imageUrl: "",
+      name: '',
+      imageUrl: '',
     },
   });
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      await axios.post('/api/servers', values);
+
+      form.reset();
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (!isMounted) {
