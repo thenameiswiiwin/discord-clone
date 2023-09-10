@@ -1,3 +1,5 @@
+'use client';
+
 import '@uploadthing/react/styles.css';
 
 import { X } from 'lucide-react';
