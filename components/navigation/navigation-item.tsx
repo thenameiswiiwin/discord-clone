@@ -41,7 +41,7 @@ function NavigationItem({ id, imageUrl, name }: NavigationItemProps) {
               'bg-primary/10 text-primary rounded-[16px]',
           )}
         >
-          <Image fill src={imageUrl} alt="Channel" />
+          <Image src={imageUrl} fill sizes="48px" alt="Channel" />
         </div>
       </button>
     </ActionTooltip>
