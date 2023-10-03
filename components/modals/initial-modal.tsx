@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { Button } from '@/components/ui/button';
+import { FileUpload } from '../file-upload';
+import { Button } from '../ui/button';
 import {
   Dialog,
   DialogContent,
@@ -16,7 +17,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '../ui/dialog';
 import {
   Form,
   FormControl,
@@ -24,10 +25,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-
-import { FileUpload } from '../file-upload';
+} from '../ui/form';
+import { Input } from '../ui/input';
 
 const formSchema = z.object({
   name: z.string().min(1, {
