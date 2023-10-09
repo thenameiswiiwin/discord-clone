@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { v4 as uuidv4 } from 'uuid';
 
 import { currentProfile } from '@/lib/current-profile';
 import { prisma } from '@/lib/db';
@@ -10,13 +9,10 @@ async function PATCH(
 ) {
   try {
     const profile = await currentProfile();
+    const { name, imageUrl } = await request.json();
 
     if (!profile) {
       return new NextResponse('Unauthorized', { status: 401 });
-    }
-
-    if (!params.serverId) {
-      return new NextResponse('ServerId is not found', { status: 400 });
     }
 
     const server = await prisma.server.update({
@@ -25,13 +21,14 @@ async function PATCH(
         profileId: profile.id,
       },
       data: {
-        inviteCode: uuidv4(),
+        name,
+        imageUrl,
       },
     });
 
     return NextResponse.json(server);
   } catch (error) {
-    console.log('[SERVERS_ID]', error);
+    console.log('[SERVER_ID_PATCH]', error);
     return new NextResponse('Internal Error', { status: 500 });
   }
 }

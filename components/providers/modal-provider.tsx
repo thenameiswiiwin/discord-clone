@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { CreateServerModal } from '../modals/create-server-modal';
+import { EditServerModal } from '../modals/edit-server-modal';
 import { InviteModal } from '../modals/invite-modal';
 
 function ModalProvider() {
@@ -20,6 +21,7 @@ function ModalProvider() {
     <>
       <CreateServerModal />
       <InviteModal />
+      <EditServerModal />
     </>
   );
 }
