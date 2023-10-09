@@ -9,14 +9,14 @@ datasource db {
 }
 
 model Profile {
-  id       String @id @default(uuid())
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   userId   String @unique
   name     String
   imageUrl String @db.Text
   email    String @db.Text
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   servers  Server[]
   members  Member[]
@@ -24,16 +24,16 @@ model Profile {
 }
 
 model Server {
-  id         String @id @default(uuid())
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   name       String
   imageUrl   String @db.Text
-  inviteCode String @db.Text
+  inviteCode String @unique
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   members  Member[]
   channels Channel[]
@@ -48,7 +48,10 @@ enum MemberRole {
 }
 
 model Member {
-  id   String     @id @default(uuid())
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   role MemberRole @default(GUEST)
 
   profileId String
@@ -56,9 +59,6 @@ model Member {
 
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@index([profileId])
   @@index([serverId])
@@ -71,7 +71,10 @@ enum ChannelType {
 }
 
 model Channel {
-  id   String      @id @default(uuid())
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   name String
   type ChannelType @default(TEXT)
 
@@ -80,9 +83,6 @@ model Channel {
 
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@index([profileId])
   @@index([serverId])

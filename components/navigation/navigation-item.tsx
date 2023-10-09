@@ -36,12 +36,17 @@ function NavigationItem({ id, imageUrl, name }: NavigationItemProps) {
         />
         <div
           className={cn(
-            'relative group flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hober:rounded-[16px] transition-all overflow-hidden',
+            'relative group flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden',
             params?.serverId === id &&
               'bg-primary/10 text-primary rounded-[16px]',
           )}
         >
-          <Image src={imageUrl} fill sizes="48px" alt="Channel" />
+          <Image
+            src={imageUrl}
+            fill
+            sizes="(max-width: 640px) 100vw, 48px"
+            alt="Channel"
+          />
         </div>
       </button>
     </ActionTooltip>
