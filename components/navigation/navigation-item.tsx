@@ -17,14 +17,14 @@ function NavigationItem({ id, imageUrl, name }: NavigationItemProps) {
   const params = useParams();
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleOnClick = () => {
     router.push(`/servers/${id}`);
   };
 
   return (
     <ActionTooltip side="right" align="center" label={name}>
       <button
-        onClick={handleClick}
+        onClick={handleOnClick}
         className="group relative flex items-center"
       >
         <div

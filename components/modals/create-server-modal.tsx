@@ -54,7 +54,7 @@ function CreateServerModal() {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleOnSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.post('/api/servers', values);
 
@@ -84,7 +84,10 @@ function CreateServerModal() {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(handleOnSubmit)}
+            className="space-y-8"
+          >
             <div className="space-y-8 px-6">
               <div className="flex items-center justify-center text-center">
                 <FormField

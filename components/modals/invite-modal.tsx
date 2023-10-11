@@ -24,7 +24,7 @@ function InviteModal() {
 
   const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
 
-  const onCopy = () => {
+  const handleOnCopy = () => {
     navigator.clipboard.writeText(inviteUrl);
     setCopied(true);
 
@@ -33,7 +33,7 @@ function InviteModal() {
     }, 1000);
   };
 
-  const onNew = async () => {
+  const handleOnNew = async () => {
     try {
       setIsLoading(true);
       const response = await axios.patch(
@@ -67,7 +67,7 @@ function InviteModal() {
               disabled={isLoading}
               className="border-0 bg-zinc-300/50 text-black focus-visible:ring-0 focus-visible:ring-offset-0"
             />
-            <Button size="icon" disabled={isLoading} onClick={onCopy}>
+            <Button size="icon" disabled={isLoading} onClick={handleOnCopy}>
               {copied ? (
                 <Check className="h-4 w-4 text-green-500" />
               ) : (
@@ -79,7 +79,7 @@ function InviteModal() {
             variant="link"
             size="sm"
             disabled={isLoading}
-            onClick={onNew}
+            onClick={handleOnNew}
             className="mt-4 text-xs text-zinc-500"
           >
             Generate a new link

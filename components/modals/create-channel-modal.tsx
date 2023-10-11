@@ -48,11 +48,11 @@ const formSchema = z.object({
 });
 
 function CreateChannelModal() {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type: modalType } = useModal();
   const router = useRouter();
   const params = useParams();
 
-  const isModalOpen = isOpen && type === 'createChannel';
+  const isModalOpen = isOpen && modalType === 'createChannel';
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -64,7 +64,7 @@ function CreateChannelModal() {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleOnSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
         url: '/api/channels',
@@ -96,7 +96,10 @@ function CreateChannelModal() {
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(handleOnSubmit)}
+            className="space-y-8"
+          >
             <div className="space-y-8 px-6">
               <FormField
                 control={form.control}

@@ -54,7 +54,7 @@ function MembersModal() {
   const isModalOpen = isOpen && type === 'members';
   const { server } = data as { server: ServerWithMembersWithProfiles };
 
-  const onKick = async (memberId: string) => {
+  const handleOnKick = async (memberId: string) => {
     try {
       setLoadingId(memberId);
       const url = qs.stringifyUrl({
@@ -75,7 +75,7 @@ function MembersModal() {
     }
   };
 
-  const onRoleChange = async (role: MemberRole, memberId: string) => {
+  const handleOnRoleChange = async (role: MemberRole, memberId: string) => {
     try {
       setLoadingId(memberId);
       const url = qs.stringifyUrl({
@@ -133,7 +133,9 @@ function MembersModal() {
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent>
                               <DropdownMenuItem
-                                onClick={() => onRoleChange('GUEST', member.id)}
+                                onClick={() =>
+                                  handleOnRoleChange('GUEST', member.id)
+                                }
                               >
                                 <Shield className="mr-2 h-4 w-4" />
                                 Guest
@@ -156,7 +158,9 @@ function MembersModal() {
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => onKick(member.id)}>
+                        <DropdownMenuItem
+                          onClick={() => handleOnKick(member.id)}
+                        >
                           <Gavel className="mr-2 h-4 w-4" />
                           Kick
                         </DropdownMenuItem>
