@@ -53,12 +53,12 @@ function InviteModal() {
       <DialogContent className="overflow-hidden bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
-            Invite Friends
+            Invite friends to {server?.name}&apos;s server
           </DialogTitle>
         </DialogHeader>
         <div className="p-6">
-          <Label className="text-xs font-bold uppercase text-zinc-500 dark:text-secondary/70">
-            Server invite link
+          <Label className="text-xs text-zinc-500 dark:text-secondary/70">
+            Share this link with others to grand access to your server!
           </Label>
           <div className="mt-2 flex items-center gap-x-2">
             <Input
