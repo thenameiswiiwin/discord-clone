@@ -3,6 +3,31 @@ import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/current-profile';
 import { prisma } from '@/lib/db';
 
+async function DELETE(
+  request: Request,
+  { params }: { params: { serverId: string } },
+) {
+  try {
+    const profile = await currentProfile();
+
+    if (!profile) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    const server = await prisma.server.delete({
+      where: {
+        id: params.serverId,
+        profileId: profile.id,
+      },
+    });
+
+    return NextResponse.json(server);
+  } catch (error) {
+    console.log('[SERVER_ID_DELETE]', error);
+    return new NextResponse('Internal Error', { status: 500 });
+  }
+}
+
 async function PATCH(
   request: Request,
   { params }: { params: { serverId: string } },
@@ -33,4 +58,4 @@ async function PATCH(
   }
 }
 
-export { PATCH };
+export { DELETE, PATCH };
