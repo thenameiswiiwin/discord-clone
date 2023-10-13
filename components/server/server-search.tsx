@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Search } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Search } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import {
   CommandDialog,
@@ -11,12 +11,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "../ui/command";
+} from '../ui/command';
 
 interface ServerSearchProps {
   data: {
     label: string;
-    type: "channel" | "member";
+    type: 'channel' | 'member';
     data:
       | {
           icon: React.ReactNode;
@@ -34,14 +34,14 @@ function ServerSearch({ data }: ServerSearchProps) {
 
   useEffect(() => {
     const down = (event: KeyboardEvent) => {
-      if ((event.key === "k" && event.metaKey) || event.ctrlKey) {
+      if ((event.key === 'k' && event.metaKey) || event.ctrlKey) {
         event.preventDefault();
         setOpen((prevOpen) => !prevOpen);
       }
     };
 
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
   }, []);
 
   const handleOnSelect = ({
@@ -49,15 +49,15 @@ function ServerSearch({ data }: ServerSearchProps) {
     type,
   }: {
     id: string;
-    type: "channel" | "member";
+    type: 'channel' | 'member';
   }) => {
     setOpen(false);
 
-    if (type === "member") {
+    if (type === 'member') {
       return router.push(`/servers/${params?.serverId}/conversations/${id}`);
     }
 
-    if (type === "channel") {
+    if (type === 'channel') {
       return router.push(`/servers/${params?.serverId}/channels/${id}`);
     }
 
