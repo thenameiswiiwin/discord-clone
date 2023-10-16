@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChannelType } from '@prisma/client';
 import axios from 'axios';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import qs from 'query-string';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -43,46 +43,44 @@ const formSchema = z.object({
       message: 'Channel name is required.',
     })
     .refine((name) => name !== 'general', {
-      message: 'Channel name cannot be general.',
+      message: 'Channel name cannot be "general".',
     }),
   type: z.nativeEnum(ChannelType),
 });
 
-function CreateChannelModal() {
+function EditChannelModal() {
   const { isOpen, onClose, type: modalType, data } = useModal();
   const router = useRouter();
-  const params = useParams();
 
-  const isModalOpen = isOpen && modalType === 'createChannel';
-  const { channelType } = data;
+  const isModalOpen = isOpen && modalType === 'editChannel';
+  const { channel, server } = data;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      type: channelType || ChannelType.TEXT,
+      type: channel?.type || ChannelType.TEXT,
     },
   });
 
   useEffect(() => {
-    if (channelType) {
-      form.setValue('type', channelType);
-    } else {
-      form.setValue('type', ChannelType.TEXT);
+    if (channel) {
+      form.setValue('name', channel.name);
+      form.setValue('type', channel.type);
     }
-  }, [channelType, form]);
+  }, [form, channel]);
 
   const isLoading = form.formState.isSubmitting;
 
   const handleOnSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url: '/api/channels',
+        url: `/api/channels/${channel?.id}`,
         query: {
-          serverId: params?.serverId,
+          serverId: server?.id,
         },
       });
-      await axios.post(url, values);
+      await axios.patch(url, values);
 
       form.reset();
       router.refresh();
@@ -102,7 +100,7 @@ function CreateChannelModal() {
       <DialogContent className="overflow-hidden bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
-            Create Channel
+            Edit Channel
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -166,7 +164,7 @@ function CreateChannelModal() {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button variant="primary" disabled={isLoading}>
-                Create
+                Save
               </Button>
             </DialogFooter>
           </form>
@@ -176,4 +174,4 @@ function CreateChannelModal() {
   );
 }
 
-export { CreateChannelModal };
+export { EditChannelModal };
